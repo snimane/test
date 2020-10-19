@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script">
+    <sys_script action="INSERT_OR_UPDATE">
+        <abort_action>false</abort_action>
+        <access>package_private</access>
+        <action_delete>true</action_delete>
+        <action_insert>false</action_insert>
+        <action_query>false</action_query>
+        <action_update>true</action_update>
+        <active>true</active>
+        <add_message>false</add_message>
+        <advanced>true</advanced>
+        <change_fields>false</change_fields>
+        <client_callable>false</client_callable>
+        <collection>change_request</collection>
+        <condition/>
+        <description/>
+        <execute_function>false</execute_function>
+        <filter_condition table="change_request">active=true^stateVALCHANGES^ORcmdb_ciVALCHANGES^ORstart_dateVALCHANGES^ORend_dateVALCHANGES^EQ<item endquery="false" field="active" goto="false" newquery="false" operator="=" or="false" value="true"/>
+            <item endquery="false" field="state" goto="false" newquery="false" operator="VALCHANGES" or="false" value=""/>
+            <item endquery="false" field="cmdb_ci" goto="false" newquery="false" operator="VALCHANGES" or="true" value=""/>
+            <item endquery="false" field="start_date" goto="false" newquery="false" operator="VALCHANGES" or="true" value=""/>
+            <item endquery="false" field="end_date" goto="false" newquery="false" operator="VALCHANGES" or="true" value=""/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </filter_condition>
+        <is_rest>false</is_rest>
+        <message/>
+        <name>Cancel Conflict Detection</name>
+        <order>99</order>
+        <priority>100</priority>
+        <rest_method/>
+        <rest_method_text/>
+        <rest_service/>
+        <rest_service_text/>
+        <rest_variables/>
+        <role_conditions/>
+        <script><![CDATA[(function executeRule(current, previous /*undefined when async or display*/) {
+	var RUNNING = "1";
+	var trackerGr = new GlideRecord("sys_execution_tracker");
+	trackerGr.addQuery("source", current.getUniqueValue());
+	trackerGr.addQuery("name", ChangeCheckConflicts.TRACKER_NAME);
+	trackerGr.addQuery("state", RUNNING);
+	trackerGr.query();
+	
+	var MESSAGE = gs.getMessage("The conflict check has been cancelled because the change request it was being run against has been modified");	
+	if (trackerGr.next())
+		SNC.GlideExecutionTracker.getBySysID(trackerGr.getUniqueValue()).cancel(MESSAGE);
+
+})(current, typeof previous != 'undefined' ?  previous : null);]]></script>
+        <sys_class_name>sys_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2015-07-22 13:37:49</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path/>
+        <sys_id>3486431bc3110200fb93e219cdba8f69</sys_id>
+        <sys_mod_count>17</sys_mod_count>
+        <sys_name>Cancel Conflict Detection</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Change Management - Collision Detector" source="com.snc.change.collision">841ec1ca7146101091f9db5cf8a3722a</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="test">5b520c40db8020109a312bfa4b9619d7</sys_scope>
+        <sys_update_name>sys_script_3486431bc3110200fb93e219cdba8f69</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2020-10-19 03:34:04</sys_updated_on>
+        <template/>
+        <when>before</when>
+    </sys_script>
+    <sys_translated_text action="delete_multiple" query="documentkey=3486431bc3110200fb93e219cdba8f69"/>
+    <sys_claim action="INSERT_OR_UPDATE">
+        <claim_owner_scope display_value="test">5b520c40db8020109a312bfa4b9619d7</claim_owner_scope>
+        <claim_timestamp>1753eebd6c00000001</claim_timestamp>
+        <metadata_update_name>sys_script_3486431bc3110200fb93e219cdba8f69</metadata_update_name>
+        <previous_claim_app_version>1.0.0</previous_claim_app_version>
+        <previous_claim_name>test</previous_claim_name>
+        <previous_claim_scope>5b520c40db8020109a312bfa4b9619d7</previous_claim_scope>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2020-10-19 03:34:04</sys_created_on>
+        <sys_id>c303c480db8020109a312bfa4b961934</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2020-10-19 03:34:04</sys_updated_on>
+    </sys_claim>
+    <sys_claim action="INSERT_OR_UPDATE">
+        <claim_owner_scope display_value="test">5b520c40db8020109a312bfa4b9619d7</claim_owner_scope>
+        <claim_timestamp>1753eebd6b10000001</claim_timestamp>
+        <metadata_update_name>sys_script_3486431bc3110200fb93e219cdba8f69</metadata_update_name>
+        <previous_claim_app_version>1.0.0</previous_claim_app_version>
+        <previous_claim_name>com.snc.change.collision</previous_claim_name>
+        <previous_claim_scope>com.snc.change.collision</previous_claim_scope>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2020-10-19 03:34:04</sys_created_on>
+        <sys_id>0f03c480db8020109a312bfa4b961934</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2020-10-19 03:34:04</sys_updated_on>
+    </sys_claim>
+</record_update>
